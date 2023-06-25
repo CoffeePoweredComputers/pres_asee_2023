@@ -1,0 +1,61 @@
+\begin{tikzpicture}[scale=0.65]
+    \pgfplotstableread{
+Semester 1        2          3           4          5         
+Q1       36.61971 23.94366   28.169014   7.042253   4.225352  
+    }\frequency
+    \begin{axis}[
+        scale only axis,
+        name=ax1,
+        legend cell align=center,
+        legend columns=-1,
+        legend style={at={(1,-0.25)},anchor=north,draw=none},
+        xbar stacked,
+        xmin=-100,
+        xmax=0,
+        try min ticks=3,
+        xticklabel style = {font=\scriptsize},
+        xticklabel=\pgfmathparse{abs(\tick)}\pgfmathprintnumber{\pgfmathresult}\,$\%$,
+        ytick=data,
+        yticklabel style={align=left},
+        yticklabels={
+            The presence of extra work caused me anxiety.,
+            Completing the extra credit made me more \\ confident in my ability to succeed in the course.
+        },
+        enlarge y limits={abs=0.45cm},
+        width=100px,
+        height=60px
+    ]
+        \addlegendimage{fill=red}
+        \addlegendimage{fill=green}
+        \addplot [fill=gray!70!blue!10] table [x expr=-(\thisrow{3}/2), meta=Semester ,y expr=\coordindex] {\frequency};
+        \addplot [fill=orange] table [x expr=-\thisrow{2}, meta=Semester ,y expr=\coordindex] {\frequency};
+        \addplot [fill=red] table [x expr=-\thisrow{1}, meta=Semester ,y expr=\coordindex] {\frequency};
+        \addlegendentry{Strongly Disagree\textrightarrow} 
+        \addlegendentry{Strongly Agree}
+    \end{axis}
+
+    \begin{axis}[
+        scale only axis,
+        at=(ax1.south east),
+        xbar stacked,
+        xmin=0,
+        xmax=100,
+        xticklabel style = {font=\scriptsize},
+        try min ticks=3,
+        xticklabel=\pgfmathparse{abs(\tick)}\pgfmathprintnumber{\pgfmathresult}\,$\%$,
+        ytick=data,
+        yticklabels={},
+        enlarge y limits={abs=0.45cm},
+        width=100px,
+        height=60px
+    ]
+
+        \addplot [fill=gray!70!blue!10] table [x expr=(\thisrow{3}/2), meta=Semester ,y expr=\coordindex] {\frequency};
+        \addplot [fill=yellow!90] table [x=4, meta=Semester ,y expr=\coordindex] {\frequency};
+        \addplot [fill=green] table [x=5, meta=Semester ,y expr=\coordindex] {\frequency};
+
+    \end{axis}
+    \vspace{-3mm}
+\end{tikzpicture}
+
+

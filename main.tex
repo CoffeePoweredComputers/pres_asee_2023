@@ -1,0 +1,406 @@
+\documentclass{beamer}
+
+\usepackage[hashEnumerators,smartEllipses]{markdown}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{booktabs}
+\usepackage{scalerel}
+\usepackage{framed} 
+\usepackage{tikz}
+\usepackage{natbib}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{xcolor}
+\usepackage{tikz}
+%\usepackage{pgf-pie}
+\usetikzlibrary{decorations.pathreplacing,calc,shapes,positioning,tikzmark, trees}
+\pgfplotsset{compat=1.17}
+
+%\setlength\parindent{0pt}
+
+\definecolor{darksky}{rgb}{0.4,0.4,1}
+\definecolor{skyblue}{rgb}{0.25,0.78,0.96}
+\definecolor{lightyellow}{rgb}{1,0.96,0.52}
+\definecolor{lightorange}{rgb}{1,0.7,0.4}
+\definecolor{lightred}{rgb}{1,0.4,0.4}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{python}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    belowskip=-0.5em,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=true,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=python}
+
+\usetikzlibrary{arrows}
+
+%
+%
+%
+
+
+\definecolor{rosso}{RGB}{220,57,18}
+\definecolor{giallo}{RGB}{255,153,0}
+\definecolor{blu}{RGB}{102,140,217}
+\definecolor{verde}{RGB}{16,150,24}
+\definecolor{viola}{RGB}{153,0,153}
+
+
+\tikzset{
+    chart/.style={
+        legend label/.style={font={\scriptsize},anchor=west,align=left},
+        legend box/.style={rectangle, draw, minimum size=5pt},
+        axis/.style={black,semithick,->},
+        axis label/.style={anchor=east,font={\tiny}},
+    },
+    pie chart/.style={
+        chart,
+        slice/.style={line cap=round, line join=round, very thick,draw=white},
+        pie title/.style={font={\bfseries}},
+        slice type/.style 2 args={
+            ##1/.style={fill=##2},
+            values of ##1/.style={}
+        }
+    }
+}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+
+\newcommand{\pie}[3][]{
+    \begin{scope}[#1]
+        \pgfmathsetmacro{\curA}{90}
+        \pgfmathsetmacro{\radius}{1}
+        \def\Centre{(0,0)}
+        \node[pie title] at (90:1.3) {#2};
+        \foreach \v/\s in{#3}{
+            \pgfmathsetmacro{\deltaA}{\v/100*360}
+            \pgfmathsetmacro{\nextA}{\curA + \deltaA}
+            \pgfmathsetmacro{\midA}{(\curA+\nextA)/2}
+
+            \path[slice,\s] \Centre
+            -- +(\curA:\radius)
+            arc (\curA:\nextA:\radius)
+            -- cycle;
+
+            % to determine direction of lines (left/right, up/down
+            \pgfmathsetmacro{\ysign}{ifthenelse(mod(\midA,360)<=180,1,-1)}
+            \pgfmathsetmacro{\xsign}{ifthenelse(mod(\midA-90,360)<=180,-1,1)}
+
+            \begin{pgfonlayer}{foreground}
+                \draw[*-,thin] \Centre ++(\midA:\radius/1.5) -- 
+                ++(\xsign*0.2*\radius,\ysign*0.2*\radius) -- 
+                ++(\xsign*\radius,0) 
+                node[above,near end,pie values,values of \s]{$\v\%$};
+            \end{pgfonlayer}
+
+
+            \global\let\curA\nextA
+        }
+    \end{scope}
+}
+
+\newcommand{\legend}[2][]{
+    \begin{scope}[#1]
+        \path
+        \foreach \n/\s in {#2}
+        {
+            ++(0, -10pt) node[\s,legend box] {} +(5pt,0) node[legend label] {\n}
+        }
+        ;
+    \end{scope}
+}
+
+
+\usepackage{graphicx}
+\usepackage{textpos}
+\usepackage{subcaption}
+\usepackage[hashEnumerators,smartEllipses]{markdown}
+\usepackage{framed} 
+\usepackage{tikz}
+\usepackage{natbib}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage{pgfplots}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,calc,shapes,positioning,tikzmark}
+\pgfplotsset{compat=1.17}
+
+\setlength\parindent{0pt}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{python}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    belowskip=-0.5em,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=true,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=python}
+
+\usetikzlibrary{arrows, shapes.geometric, intersections}
+
+\tikzstyle{action} = [rectangle, rounded corners, minimum width=4cm, minimum height=1.5cm,text centered, draw=black, fill=red!30]
+%\tikzstyle{code} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{code} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{posfeedback} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+
+
+\usetheme{Madrid}
+\useoutertheme{miniframes} % Alternatively: miniframes, infolines, split
+
+% Setup the university's color pallette
+\definecolor{UIUCorange}{RGB}{19, 41, 75} % UBC Blue (primary)
+\definecolor{UIUCblue}{RGB}{232, 74, 39} % UBC Grey (secondary)
+
+
+\setbeamercolor{palette primary}{bg=UIUCorange,fg=white}
+\setbeamercolor{palette secondary}{bg=UIUCblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=UIUCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UIUCblue,fg=white}
+\setbeamercolor{structure}{fg=UIUCorange} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UIUCblue} % TOC sections
+
+\setbeamercolor{subsection in head/foot}{bg=UIUCorange,fg=UIUCblue}
+\setbeamercolor{subsection in head/foot}{bg=UIUCorange,fg=UIUCblue}
+
+\usepackage[utf8]{inputenc}
+
+
+%Information to be included in the title page:
+\title[Impacts of EC]{\textbf{Understanding the impacts of extra credit modules on students’ learning experience in a 100-level electrical and computer engineering course}}
+\author[D.H Smith IV \textit{et al.}]{\textbf{David H. Smith IV, Ujjal K. Bohwmik, Yuting Chen}}
+\institute[\textbf{UIUC}]{\textbf{University of Illinois Urbana-Champaign}}
+\date{\textbf{Wed, June 25$^{\text{th}}$, 2021}}
+
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\addtobeamertemplate{title page}{\vspace{3\baselineskip}}{}
+\addtobeamertemplate{title page}{
+    \begin{textblock*}{\paperwidth}(-1.0em, -1.2em)
+        \includegraphics[width=\paperwidth, height=\paperheight]{imgs/uiuc.png}
+    \end{textblock*} 
+}{}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Background \& Motivations}
+
+  \begin{itemize}
+    \item \textbf{Context:} An introductory Electrical and Computer Engineering course at UIUC with ~400 students.
+    \item \textbf{Goal:} Introduce students to concepts in parallel computing early to ecourage them
+    \item 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extra Credit Setup}
+
+    \textbf{Adder Circuits:}
+
+    \includegraphics[height=0.24\textheight]{}
+    \includegraphics[height=0.24\textheight]{}
+
+    \\ \midrule \\
+
+    \textbf{Counter Circuits:}
+    \includegraphics[height=0.24\textheight]{}
+    \includegraphics[height=0.24\textheight]{}
+
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prior Work}
+
+    \begin{itemize}
+      \item Prior work has indicated the extra credit has a high participation rate and students perform well.
+      \item This leaves a gap in our qualitative understanding of these modules and their impacts.
+      \item \textbf{Goal:} Complete the picture to determine the impact of introducing these concepts as extra-credit modules on students.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Analysis}
+
+    \begin{minipage}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+      \begin{itemize}
+        \item We created a survey for both students who completed and did not complete the extra credit modules. 
+        \item Each contained a mix of likert and short response questions.
+        \item Responses to short response questions were inductively coded and grouped into themes.
+      \end{itemize}
+    \end{minipage}
+    
+    % Make a minipage
+
+\end{frame}
+
+\section{Motivations}
+
+
+\begin{frame}[fragile]
+    \frametitle{Motivations for Completing the EC}
+
+    \begin{itemize}
+      \item \textbf{Personal Edification:}\\
+        \begin{quote}
+          ``I thought that it would've been a good opportunity to learn more about
+          the topics I've learned during the class''
+        \end{quote}
+      \item \textbf{Approachability:}\\
+        \begin{quote}
+          ``The extra credit did not seem like it would take too much time and it seemed simple.''
+        \end{quote}
+      \item \textbf{Maximizing Grades:}\\
+        \begin{quote}
+          ``Extra-credit assignments are a great way of improving grades for
+          students who might've fallen behind. Each course should have a
+          substantiated amount of them to help struggling students succeed.''
+        \end{quote}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Potential Motivators for Those Who Did Not}
+
+    \begin{itemize}
+      \item \textbf{Sufficient Grade:}\\
+        \begin{quote}
+          ``If my [homework] grade was worse I would have been motivated to focus on it''
+        \end{quote}
+      \item \textbf{Changing Category:}\\
+        \begin{quote}
+          ``Potentially adding credit to a category like exams instead.''
+        \end{quote}
+      \item \textbf{Removing Caps:}\\
+        \begin{quote}
+          ``if the extra credit could allow the grade to go beyond their percentage caps.''
+        \end{quote}
+    \end{itemize}
+
+
+\end{frame}
+
+
+\section{Anxiety}
+
+\begin{frame}
+    \frametitle{Relationship Between Extra Credit Opportunities and Anxiety}
+
+    \begin{figure}
+      \input{imgs/anxiety.tex}
+    \end{figure}
+
+    \begin{itemize}
+      \item \textbf{Anxiety Reducation:}
+          ``It's nice to have extra points as a cusion for my grade.''
+      \item \textbf{No Impact on Anxiety:}
+          ``As it was not required, I was not stressed about completing it and would have been fine without doing it.''
+      \item \textbf{Anxiety Increase:}
+          ``It seemed as though the work was mandatory in order to protect my grade\ldots''
+    \end{itemize}
+
+\end{frame}
+
+\section{Learning \&  Interest}
+
+\begin{frame}
+    \frametitle{Impacts on Interest in Parallel Computing}
+
+    \begin{figure}
+      \input{imgs/interest.tex}
+    \end{figure}
+
+
+    \begin{quote}
+      ``I appreciated the carry lookahead assignment as it had me apply
+      patterns that I recognized \ldots It felt satisfying seeing how I can
+      apply a pattern I recognized.''
+    \end{quote}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Impacts on Interest in Parallel Computing}
+
+    \begin{figure}
+      \input{imgs/interest.tex}
+    \end{figure}
+
+    \vfill
+    \begin{quote}
+      ``Just enough info to catch my attention, not quite enough to satisfy my
+      curiosity. The assignments gave meaning to parallel computing courses,
+      instead of them being just other options from the list.''
+    \end{quote}
+    \vfill
+\end{frame}
+
+\section{Takeaways}
+
+\begin{frame}
+    \frametitle{Key Takeaways}
+
+    \begin{itemize}
+      \item Students had a positive, or at worst neutral, response to the concepts introduced in the extra credit modules.
+      \item There appear to be additional benifits to introducing them as extra credit (e.g., anxiety reduction).
+    \end{itemize}
+\end{frame}
+
+
+\end{document}
