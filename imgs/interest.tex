@@ -1,8 +1,8 @@
-\begin{tikzpicture}[scale=0.65]]
+\begin{tikzpicture}[scale=0.6]]
     \pgfplotstableread{
 Semester  5    4       3     2        1
-Q1        50.70422   30.98591   15.492957   1.408450   1.408450
-Q2        18.14516   29.83871   48.991935   2.016129   1.008065
+Q3        28.16901   30.98591   26.760563   9.859154   4.225352
+Q4        22.5352    33.8028    42.25352    1.4084     0
     }\frequency
     \begin{axis}[
         scale only axis,
@@ -13,28 +13,28 @@ Q2        18.14516   29.83871   48.991935   2.016129   1.008065
         xbar stacked,
         xmin=-100,
         xmax=0,
-        try min ticks=3,
+        try min ticks=1,
         xticklabel style = {font=\scriptsize},
         xticklabel=\pgfmathparse{abs(\tick)}\pgfmathprintnumber{\pgfmathresult}\,$\%$,
         ytick=data,
         yticklabel style={align=left},
         yticklabels={
-            I thought the assignments were a valuable learning 
-            ex-\\ perience.,
-            I completed the extra credit assignments because I 
-            tho- \\ught they would be a good learning experience.
+            Rank the impact the extra credit assignment had on \\
+            your interest in the topic of computing in general., 
+            Rank the imapct extra credit assignments had on your \\
+            interest in the topic of parallel computing.
         },
         enlarge y limits={abs=0.45cm},
         width=100px,
-        height=60px
+        height=70px
     ]
         \addlegendimage{fill=red}
         \addlegendimage{fill=green}
         \addplot [fill=gray!70!blue!10] table [x expr=-(\thisrow{3}/2), meta=Semester ,y expr=\coordindex] {\frequency};
         \addplot [fill=orange] table [x expr=-\thisrow{2}, meta=Semester ,y expr=\coordindex] {\frequency};
         \addplot [fill=red] table [x expr=-\thisrow{1}, meta=Semester ,y expr=\coordindex] {\frequency};
-        \addlegendentry{Strongly Disagree\textrightarrow} 
-        \addlegendentry{Strongly Agree}
+        \addlegendentry{No Impact\textrightarrow} 
+        \addlegendentry{High Impact}
     \end{axis}
 
     \begin{axis}[
@@ -50,7 +50,7 @@ Q2        18.14516   29.83871   48.991935   2.016129   1.008065
         yticklabels={},
         enlarge y limits={abs=0.45cm},
         width=100px,
-        height=60px
+        height=70px
     ]
 
         \addplot [fill=gray!70!blue!10] table [x expr=(\thisrow{3}/2), meta=Semester ,y expr=\coordindex] {\frequency};
