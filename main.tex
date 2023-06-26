@@ -216,9 +216,9 @@
 
 %Information to be included in the title page:
 \title[Impacts of EC]{\textbf{Understanding the impacts of extra credit modules on students’ learning experience in a 100-level electrical and computer engineering course}}
-\author[D.H Smith IV \textit{et al.}]{\textbf{David H. Smith IV, Ujjal K. Bohwmik, Yuting Chen}}
+\author[D.H Smith IV \textit{et al.}]{\textbf{David H. Smith IV, Ujjal K. Bhowmik, Yuting W. Chen}}
 \institute[\textbf{UIUC}]{\textbf{University of Illinois Urbana-Champaign}}
-\date{\textbf{Wed, June 25$^{\text{th}}$, 2021}}
+\date{\textbf{Monday, June 26$^{\text{th}}$, 2023}}
 
 \setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
 \addtobeamertemplate{title page}{\vspace{3\baselineskip}}{}
@@ -237,36 +237,52 @@
 \begin{frame}
   \frametitle{Background \& Motivations}
 
+  \begin{figure}
+      \centering
+      \includegraphics[width=250px]{courses.png}
+  \end{figure}
+  \vfill
   \begin{itemize}
-    \item \textbf{Context:} An introductory Electrical and Computer Engineering course at UIUC with ~400 students.
-    \item \textbf{Goal:} Introduce students to concepts in parallel computing early to ecourage them
-    \item 
+    \item \textbf{ECE 120:} An introductory Electrical and Computer Engineering course at UIUC with $\sim$400 students each semester.
+    \item \textbf{Goal:} Introduce students to concepts in parallel computing early on to present a more realistic view on computing and spark interest for related higher level courses
+    %\item 
   \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Extra Credit Setup}
 
-    \textbf{Adder Circuits:}
+    \begin{figure}[htbp]
+      \centering
+      \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{parallel_add.png}
+        \caption{Parallel Adder}
+        \label{fig:subfig1}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{parallel_counter.png}
+        \caption{Parallel Counter}
+        \label{fig:subfig2}
+      \end{subfigure}
+    \end{figure}
 
-    \includegraphics[height=0.24\textheight]{}
-    \includegraphics[height=0.24\textheight]{}
-
-    \\ \midrule \\
-
-    \textbf{Counter Circuits:}
-    \includegraphics[height=0.24\textheight]{}
-    \includegraphics[height=0.24\textheight]{}
-
-    
+    \begin{itemize}
+        \item Modules that extended serial counters and adders were developed.
+        \item Students were presented with modules of videos and slides.
+        \item Extra credit (1.5\% applied to homework) was given for completing a related retention quiz.
+    \end{itemize}
+     
 \end{frame}
 
 \begin{frame}
     \frametitle{Prior Work}
 
     \begin{itemize}
-      \item Prior work has indicated the extra credit has a high participation rate and students perform well.
-      \item This leaves a gap in our qualitative understanding of these modules and their impacts.
+      \item Prior work has indicated the extra credit has a high participation rate and students perform well. \\ \vspace{0.25cm}
+      \item This leaves a gap in our qualitative understanding of these modules and their impacts. \\ \vspace{0.25cm}
       \item \textbf{Goal:} Complete the picture to determine the impact of introducing these concepts as extra-credit modules on students.
     \end{itemize}
 \end{frame}
@@ -276,13 +292,13 @@
     \frametitle{Analysis}
 
     \begin{minipage}{0.45\textwidth}
-      \includegraphics[width=\textwidth]{}
+      \includegraphics[width=\textwidth]{survey.png}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.54\textwidth}
       \begin{itemize}
-        \item We created a survey for both students who completed and did not complete the extra credit modules. 
-        \item Each contained a mix of likert and short response questions.
-        \item Responses to short response questions were inductively coded and grouped into themes.
+        \item We created a survey for both students who completed and those did not complete the extra credit modules. 
+        \item Each contained a mix of 5 point Likert scale and short response questions.
+        \item Received 105 responses between two semesters.
       \end{itemize}
     \end{minipage}
     
@@ -290,11 +306,32 @@
 
 \end{frame}
 
+\begin{frame}[fragile]
+    \frametitle{Framing the Results}
+
+    \begin{minipage}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{survey.png}
+    \end{minipage}
+    \begin{minipage}{0.54\textwidth}
+        \begin{itemize}
+            \item The survey questions covered the following topics:
+            \begin{itemize}
+                \item Motivations
+                \item Anxiety
+                \item Learning and Interest
+            \end{itemize}
+            \item Responses to short response questions were inductively coded and grouped into themes.
+        \end{itemize}
+    \end{minipage}
+
+\end{frame}
+
+
 \section{Motivations}
 
 
 \begin{frame}[fragile]
-    \frametitle{Motivations for Completing the EC}
+    \frametitle{Motivations for Completing the Extra Credit}
 
     \begin{itemize}
       \item \textbf{Personal Edification:}\\
@@ -320,7 +357,7 @@
     \frametitle{Potential Motivators for Those Who Did Not}
 
     \begin{itemize}
-      \item \textbf{Sufficient Grade:}\\
+      \item \textbf{Insufficient Grade:}\\
         \begin{quote}
           ``If my [homework] grade was worse I would have been motivated to focus on it''
         \end{quote}
@@ -366,11 +403,11 @@
     \begin{figure}
       \input{imgs/interest.tex}
     \end{figure}
-
-
+    \vfill
     \begin{quote}
-      ``I appreciated the carry lookahead assignment as it had me apply
-      patterns that I recognized \ldots It felt satisfying seeing how I can
+      ``I appreciated the carry look ahead assignment as it had me 
+      \textcolor{orange}{\textbf{apply
+      patterns that I recognized}} \ldots It felt satisfying seeing how I can
       apply a pattern I recognized.''
     \end{quote}
 \end{frame}
@@ -381,14 +418,29 @@
     \begin{figure}
       \input{imgs/interest.tex}
     \end{figure}
-
     \vfill
     \begin{quote}
       ``Just enough info to catch my attention, not quite enough to satisfy my
-      curiosity. The assignments gave meaning to parallel computing courses,
-      instead of them being just other options from the list.''
+      curiosity. \textcolor{orange}{\textbf{The assignments gave meaning to parallel computing courses,
+      instead of them being just other options from the list.}}''
     \end{quote}
     \vfill
+\end{frame}
+
+\begin{frame}
+    \frametitle{Impacts on Interest in Parallel Computing}
+
+    \begin{figure}
+      \input{imgs/interest.tex}
+    \end{figure}
+
+    \vfill
+    \begin{itemize}
+        \item ``It did not really change my interest in the parallel computing topic.'' \\ \vspace{0.25cm} 
+        \item ``I wasn't too interested in the topic to begin with, \textcolor{orange}{\textbf{so I just did the assignment for the points.}}''\\ \vspace{0.25cm}
+        \item ``\textcolor{orange}{\textbf{I am already interested in power electronics and electrical propulsion}}, so doing these extra credit quizzes isn't enough for me to change my area of interest.''
+    \end{itemize}
+
 \end{frame}
 
 \section{Takeaways}
@@ -398,8 +450,14 @@
 
     \begin{itemize}
       \item Students had a positive, or at worst neutral, response to the concepts introduced in the extra credit modules.
-      \item There appear to be additional benifits to introducing them as extra credit (e.g., anxiety reduction).
+      \item There appear to be additional benefits to introducing them as extra credit (e.g., anxiety reduction).
+      \item Modules such as these appear to be a useful vector to introduce higher level concepts early on.
+      \item For details on the modules and their implementation please contact \textcolor{blue}{ubhowmik@illinois.edu}
     \end{itemize}
+    \vfill
+      \begin{centered}
+          \textbf{\Large Thank you!}
+      \end{centered}
 \end{frame}
 
 
